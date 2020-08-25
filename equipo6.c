@@ -13,40 +13,39 @@ struct Agent {
     char last_name[64];
 	int age;
     char gender;
-	struct Asset asset[64];
+	struct Asset asset[10];
     char mission[12];
 };
 
+//Globales
+struct Agent agents[10];
+struct Asset assets[100];
+char mission[64][12];
+
 //Registers
 void registerAgent(){
-
-}
-
-void registerAsset(){
-
-}
-
-void registerMission(){
     
 }
 
-void checkMission(){
+void registerMission(char mis){
+    
+}
 
+//Check if mission exists
+void checkMission(){
+    //if mission in mission 
 }
 
 
 
 int main() {
+    regex_t regex;
+    int return_value;
 	short int num;
-    
-    struct Agent agents[64];
-	struct Asset assets[64];
     int iAsset = 0;
     int iAgent = 0;
 	int iMission = 0;
-	char mission[64][12];
-
-
+	
 	do {
         printf( "Select your task:\n 1. Add a new agent \n 2. Add a new asset \n 3. Add a new mission \n 4. Quit");
         scanf("%d", num);
@@ -62,25 +61,26 @@ int main() {
                 printf("First Name:\n");
                 scanf("%s", agent.name);
 
+
                 printf("Last Name:\n");
                 scanf("%s", agent.last_name);
                 
                 printf("Age:\n");
-                scanf("%d", agent.age);
+                scanf("%d", &agent.age);
                 
                 printf("Gender (M/F):\n");
-                scanf("%c", agent.gender);
+                scanf("%c", &agent.gender);
                 
                 printf("How many assets will you be adding?\n");
                 scanf("%d", noAsset);
-
+                
                 for (short int i = 0; i < noAsset; i++) {
                     printf("Please enter the AssetID\n");
                     scanf("%s", a_id);
                     registerAsset(a_id);
                 }
         
-                printf("Mission:\n");
+                printf("Enter a mission: \n");
                 scanf("%s", mission);
                 //checkMission();
                 //registerMission(mission);
@@ -92,6 +92,8 @@ int main() {
                 char new_mission[12];
                 printf("You have selected to register a mission. Please enter the ID mission:");
                 scanf("%s", new_mission);
+                // agregar la misión al arreglo de arreglos
+                registerMission(new_mission);
                 break;
             
             case 3:
@@ -106,6 +108,8 @@ int main() {
                 
                 printf("Asset ID: ");
                 scanf("%s", asset.id);
+
+
                 
                 //registro
                 assets[iAsset] = asset;
