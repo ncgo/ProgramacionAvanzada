@@ -36,6 +36,17 @@ void checkMission(){
     //if mission in mission
 }
 
+int checkName(char name[64]) {
+    regex_t reg;
+    int value;
+    regcomp(&reg, "^[A-Z]{1}[a-z]+$", REG_EXTENDED);
+    value = regexec(&reg, name, 0, NULL, 0);
+    if (value != 0) {
+        printf("Invalid name. Try again\n");
+    }
+    regfree(&reg);
+    return value;
+}
 
 
 int main() {
@@ -59,18 +70,28 @@ int main() {
             case 1:
                 // Registrar agente
                 printf("You have chosen to add a new agent. \n Please enter the following information:\n");
-                printf("First Name:\n");
+                printf("First name:\n");
                 scanf("%s", agent.name);
+                while(checkName(agent.name) != 0){
+                    scanf("%s", agent.name);
+                }
 
 
-                printf("Last Name:\n");
+                printf("Last name:\n");
                 scanf("%s", agent.last_name);
+                while(checkName(agent.last_name) != 0){
+                    scanf("%s", agent.last_name);
+                }
                 
                 printf("Age:\n");
                 scanf("%d", &agent.age);
                 
                 printf("Gender (M/F):\n");
-                scanf("%c", &agent.gender);
+                scanf(" %c", &agent.gender);
+                while (agent.gender != 'M' && agent.gender != 'F') {
+                    printf("Invalid gender. Try again\n");
+                    scanf(" %c", &agent.gender);
+                }
                 
                 printf("How many assets will you be adding?\n");
                 scanf("%hd", &noAsset);
@@ -98,11 +119,17 @@ int main() {
             
             case 3:
                 // Pedir datos de asset
-                printf("Name: ");
+                printf("First name: ");
                 scanf("%s", asset.name);
+                while(checkName(asset.name) != 0){
+                    scanf("%s", asset.name);
+                }
                 
                 printf("Last name: ");
                 scanf("%s", asset.last_name);
+                while(checkName(asset.last_name) != 0){
+                    scanf("%s", asset.last_name);
+                }
                 
                 printf("Asset ID: ");
                 scanf("%s", asset.id);
