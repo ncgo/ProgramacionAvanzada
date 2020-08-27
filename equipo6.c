@@ -86,7 +86,7 @@ int main() {
     struct Asset asset;
     
     do {
-        printf( "Select your task:\n 1. Add a new agent \n 2. Add a new asset \n 3. Add a new mission \n 4. Quit");
+        printf( "Select your task:\n 1. Add a new agent \n 2. Add a new asset \n 3. Add a new mission \n 4. View the agents \n 5. Quit\n");
         scanf("%hd", &num);
         switch (num) {
             case 1:
@@ -175,8 +175,12 @@ int main() {
                 }
                  // agregar la misión al arreglo de arreglos
                 break;
-            
+
             case 4:
+                // accesar a la información
+            break;
+            
+            case 5:
                 //Salir del programa
                 break;
             
@@ -186,7 +190,7 @@ int main() {
                 break;
         }
         
-    } while(num!=4);
+    } while(num!=5);
     printf( "Thank you for using this application. Good luck on your mission. The Secretary is counting on you." );
     return 0;
 }
