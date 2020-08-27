@@ -83,6 +83,7 @@ int main() {
     char mission[12];
     short int noAsset;
     char new_mission[12];
+    int flag;
     struct Asset asset;
     
     do {
@@ -109,7 +110,16 @@ int main() {
                 }
                 
                 printf("Age:\n");
-                scanf("%d", &agent.age);
+                flag = scanf("%d", &agent.age);
+                // Checar edad
+                if (flag == 0 || (agent.age < 1 || agent.age > 100)){
+                    do {
+                        printf("Invalid age. Try again.\n");
+                        fflush(stdin);
+                        flag = scanf("%d", &agent.age);
+                    } while (flag == 0 || (agent.age < 1 || agent.age > 100));
+                    
+                }
                 
                 printf("Gender (M/F):\n");
                 scanf(" %c", &agent.gender);
