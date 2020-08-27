@@ -5,15 +5,15 @@
 struct Asset {
     char name[64];
     char last_name[64];
-    char id[13];
+    char id[14];
 };
 
 struct Agent {
     char name[64];
     char last_name[64];
-	int age;
+    int age;
     char gender;
-	struct Asset asset[10];
+    struct Asset asset[10];
     char mission[12];
 };
 
@@ -27,36 +27,37 @@ void registerAgent(){
     
 }
 
-void registerMission(char mis){
+void registerMission(char mis[12]){
     
 }
 
 //Check if mission exists
 void checkMission(){
-    //if mission in mission 
+    //if mission in mission
 }
 
 
 
 int main() {
+    struct Agent agent;
     regex_t regex;
     int return_value;
-	short int num;
+    short int num;
     int iAsset = 0;
     int iAgent = 0;
-	int iMission = 0;
-	
-	do {
+    int iMission = 0;
+    char a_id[64];
+    char mission[12];
+    short int noAsset;
+    char new_mission[12];
+    struct Asset asset;
+    
+    do {
         printf( "Select your task:\n 1. Add a new agent \n 2. Add a new asset \n 3. Add a new mission \n 4. Quit");
-        scanf("%d", num);
+        scanf("%hd", &num);
         switch (num) {
             case 1:
                 // Registrar agente
-                struct Agent agent;
-                char a_id[64];
-                char mission[12];
-                short int noAsset;
-                
                 printf("You have chosen to add a new agent. \n Please enter the following information:\n");
                 printf("First Name:\n");
                 scanf("%s", agent.name);
@@ -72,12 +73,12 @@ int main() {
                 scanf("%c", &agent.gender);
                 
                 printf("How many assets will you be adding?\n");
-                scanf("%d", noAsset);
+                scanf("%hd", &noAsset);
                 
                 for (short int i = 0; i < noAsset; i++) {
                     printf("Please enter the AssetID\n");
                     scanf("%s", a_id);
-                    registerAsset(a_id);
+                    //registerAsset(a_id);
                 }
         
                 printf("Enter a mission: \n");
@@ -89,7 +90,6 @@ int main() {
 
             case 2:
                 // Registrar mision
-                char new_mission[12];
                 printf("You have selected to register a mission. Please enter the ID mission:");
                 scanf("%s", new_mission);
                 // agregar la misión al arreglo de arreglos
@@ -98,8 +98,6 @@ int main() {
             
             case 3:
                 // Pedir datos de asset
-                struct Asset asset;
-                
                 printf("Name: ");
                 scanf("%s", asset.name);
                 
@@ -108,12 +106,23 @@ int main() {
                 
                 printf("Asset ID: ");
                 scanf("%s", asset.id);
-
+                
+                regcomp(&regex, "[A-Za-z]{4}[0-9]{9}", REG_EXTENDED);
+                return_value = regexec(&regex, asset.id, 0, NULL, 0);
 
                 
-                //registro
-                assets[iAsset] = asset;
-                iAsset++;
+                // si se encontró el patrón
+                if (return_value == 0) {
+                    // registro
+                    assets[iAsset] = asset;
+                    iAsset++;
+                }
+                else if (return_value == REG_NOMATCH) {
+                    printf("ID invalido\n");
+                }
+                else{
+                    printf("ERROR\n");
+                }
                 break;
             
             case 4:
