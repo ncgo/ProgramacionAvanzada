@@ -27,8 +27,28 @@ void registerAgent(){
     
 }
 
-void registerMission(char mis[12]){
-    
+int registerMission(char mis[12]){
+    regex_t reg;
+    int value;
+    regcomp(&reg, "[A-Za-z]{3}[0-9]{9}", REG_EXTENDED);
+    value = regexec(&reg, mis, 0, NULL, 0);
+    if (value != 0) {
+        printf("Invalid ID. Try again\n");
+    }
+    regfree(&reg);
+    return value;
+}
+
+int registerAssetID(char id[14]){
+    regex_t reg;
+    int value;
+    regcomp(&reg, "[A-Za-z]{4}[0-9]{9}", REG_EXTENDED);
+    value = regexec(&reg, id, 0, NULL, 0);
+    if (value != 0) {
+        printf("Invalid ID. Try again\n");
+    }
+    regfree(&reg);
+    return value;
 }
 
 //Check if mission exists
@@ -70,8 +90,10 @@ int main() {
             case 1:
                 // Registrar agente
                 printf("You have chosen to add a new agent. \n Please enter the following information:\n");
+                
                 printf("First name:\n");
                 scanf("%s", agent.name);
+                //Checar nombre
                 while(checkName(agent.name) != 0){
                     scanf("%s", agent.name);
                 }
@@ -79,6 +101,7 @@ int main() {
 
                 printf("Last name:\n");
                 scanf("%s", agent.last_name);
+                //Checar nombre
                 while(checkName(agent.last_name) != 0){
                     scanf("%s", agent.last_name);
                 }
@@ -88,6 +111,7 @@ int main() {
                 
                 printf("Gender (M/F):\n");
                 scanf(" %c", &agent.gender);
+                //Checar genero
                 while (agent.gender != 'M' && agent.gender != 'F') {
                     printf("Invalid gender. Try again\n");
                     scanf(" %c", &agent.gender);
@@ -110,46 +134,44 @@ int main() {
                 break;
 
             case 2:
-                // Registrar mision
-                printf("You have selected to register a mission. Please enter the ID mission:");
-                scanf("%s", new_mission);
-                // agregar la misión al arreglo de arreglos
-                registerMission(new_mission);
-                break;
-            
-            case 3:
                 // Pedir datos de asset
                 printf("First name: ");
                 scanf("%s", asset.name);
+                // Checar nombre
                 while(checkName(asset.name) != 0){
                     scanf("%s", asset.name);
                 }
                 
                 printf("Last name: ");
                 scanf("%s", asset.last_name);
+                // Checar nombre
                 while(checkName(asset.last_name) != 0){
                     scanf("%s", asset.last_name);
                 }
                 
                 printf("Asset ID: ");
                 scanf("%s", asset.id);
+                // Checar id
+                while(registerAssetID(asset.id) != 0){
+                    scanf("%s", asset.id);
+                }
                 
-                regcomp(&regex, "[A-Za-z]{4}[0-9]{9}", REG_EXTENDED);
-                return_value = regexec(&regex, asset.id, 0, NULL, 0);
-
+                // registro
+                assets[iAsset] = asset;
+                iAsset++;
                 
-                // si se encontró el patrón
-                if (return_value == 0) {
-                    // registro
-                    assets[iAsset] = asset;
-                    iAsset++;
+                break;
+            
+            case 3:
+                // Registrar mision
+                printf("You have selected to register a mission. Please enter the ID mission:");
+                scanf("%s", new_mission);
+               
+               // checar ID
+                while(registerMission(new_mission) != 0){
+                    scanf("%s", new_mission);
                 }
-                else if (return_value == REG_NOMATCH) {
-                    printf("ID invalido\n");
-                }
-                else{
-                    printf("ERROR\n");
-                }
+                 // agregar la misión al arreglo de arreglos
                 break;
             
             case 4:
