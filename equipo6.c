@@ -27,6 +27,7 @@ void registerAgent(){
     
 }
 
+// Funcion que checa si la mission ID tiene el formato correcto
 int registerMission(char mis[12]){
     regex_t reg;
     int value;
@@ -39,6 +40,7 @@ int registerMission(char mis[12]){
     return value;
 }
 
+// Funcion que checa si el asset ID tiene el formato correcto
 int registerAssetID(char id[14]){
     regex_t reg;
     int value;
@@ -155,7 +157,7 @@ int main() {
                 while(registerAssetID(asset.id) != 0){
                     scanf("%s", asset.id);
                 }
-                
+
                 // registro
                 assets[iAsset] = asset;
                 iAsset++;
