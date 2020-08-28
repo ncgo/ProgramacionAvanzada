@@ -118,7 +118,7 @@ int main() {
                         fflush(stdin);
                         flag = scanf("%d", &agent.age);
                     } while (flag == 0 || (agent.age < 1 || agent.age > 100));
-                    
+                              
                 }
                 
                 printf("Gender (M/F):\n");
