@@ -158,6 +158,7 @@ int main() {
                 printf("First Name:\n");
                 scanf("%s", agent.name);
                 while(checkName(agent.name) == 0){
+                    printf("Name: \n");
                     scanf("%s", agent.name);
                 }
 
@@ -165,6 +166,7 @@ int main() {
                 printf("Last Name:\n");
                 scanf("%s", agent.last_name);
                 while(checkName(agent.last_name) == 0){
+                    printf("Last Name: \n");
                     scanf("%s", agent.last_name);
                 }
                 
@@ -208,6 +210,7 @@ int main() {
                         printf("Last name: ");
                         scanf("%s", asset.last_name);
                         while(checkName(asset.last_name) == 0){
+                            printf("Last name: ");
                             scanf("%s", asset.last_name);
                         }
                         
@@ -231,7 +234,7 @@ int main() {
                     scanf("%s", agent.mission);
                 }
                 
-                registerMission(mission, iMission);
+                registerMission(agent.mission, iMission);
                 iMission++;
                 agents[iAgent] = agent; //registro del agent en array de agentes
                 iAgent++;
