@@ -256,6 +256,7 @@ int main() {
                 break;
             
             case 3:{
+                printf("You have chosen to add a new asset. \n Please enter the following information:\n");
                 // Pedir datos de asset
                 struct Asset asset;
                 int flag = 0;//bandera id correcto de asset
@@ -279,12 +280,14 @@ int main() {
             }
                 break;
             case 4:{ //Obtener los agentes y su numero asociado
+                printf("You have chosen to get agents. \n ");
                 printf("Current agents: \n");
                 getAgents(iAgent);
                 printf("Request completed \n");
                 break;
             }
             case 5:{ //Info detallada de un agente
+                printf("You have chosen to get specific info about an agent. \n Please enter the following information:\n");
                 int agent_num;
                 printf("Enter agent number: \n");
                 scanf("%d", &agent_num);
@@ -292,12 +295,14 @@ int main() {
                 break;
             }
             case 6:{//Get all assets
+                printf("You have chosen to get all assets. \n");
                 printf("Current assets: \n");
                 getAssets(iAsset);
                 printf("Request completed \n");
                 break;
             }
             case 7:{//Get asset specific info
+                printf("You have chosen to get specific info about an asset. \n Please enter the following information:\n");
                 int asset_num;
                 printf("Enter asset number: \n");
                 scanf("%d", &asset_num);
@@ -305,6 +310,7 @@ int main() {
                 break;
             }
             case 8:{//Get all missions
+                printf("You have chosen to get all missions. \n");
                 getMissions(iMission);
                 break;
             }
@@ -312,7 +318,7 @@ int main() {
                 //Salir del programa
                 break;
             default:
-                printf("Invalid option. Try again.");
+                printf("Invalid option. Try again.\n");
                 break;
         }
         
