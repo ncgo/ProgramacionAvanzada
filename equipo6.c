@@ -14,14 +14,14 @@ struct Agent {
     char last_name[64];
     int age;
     char gender;
-    struct Asset *asset[10];
+    struct Asset asset[10];
     char mission[13];
     int numAssets;
 };
 
 //Globales
 struct Agent agents[10];
-struct Asset* assets[100];
+struct Asset assets[100];
 char mission[64][13];
 
 
@@ -35,7 +35,7 @@ void getAgents(int currAgents){
 
 void getAssets(int currAssets){
     for(int i = 0; i < currAssets; i++){
-        printf("%d - %s %s \n", i+1, assets[i]->name, assets[i]->last_name);
+        printf("%d - %s %s \n", i+1, assets[i].name, assets[i].last_name);
     }
 }
 
@@ -48,7 +48,7 @@ void getAgentInfo(int num, int currAgents){
         if(agents[num].numAssets>0){
             printf("Agents assets: \n");
             for(int i = 0; i < agents[num].numAssets; i++)
-                printf("Asset %d, Name: %s %s\n", i+1, agents[num].asset[i]->name, agents[num].asset[i]->last_name);
+                printf("Asset %d, Name: %s %s\n", i+1, agents[num].asset[i].name, agents[num].asset[i].last_name);
         }else
         {
             printf("Agent has no assets.\n");
@@ -63,8 +63,8 @@ void getAgentInfo(int num, int currAgents){
 void getAssetInfo(int num, int currAssets){
     if(num <= currAssets && num >0){
         num--;
-        printf("Asset Complete Name: %s %s \n", assets[num]->name, assets[num]->last_name);
-        printf("Asset id: %s \n", assets[num]->id);
+        printf("Asset Complete Name: %s %s \n", assets[num].name, assets[num].last_name);
+        printf("Asset id: %s \n", assets[num].id);
     }else{
         printf("Asset no valido");
     }
@@ -169,19 +169,36 @@ int main() {
                 }
                 
                 printf("Age:\n");
-                scanf("%d", &agent.age);
+                int flag = scanf("%d", &agent.age);
+                // Checar edad
+                if (flag == 0 || (agent.age < 1 || agent.age > 100)){
+                    do {
+                        printf("Invalid age. Try again.\n");
+                        fflush(stdin);
+                        flag = scanf("%d", &agent.age);
+                    } while (flag == 0 || (agent.age < 1 || agent.age > 100));
+                              
+                }
                 
                 printf("Gender (M/F):\n");
                 scanf(" %c", &agent.gender);
+                //Checar genero
+                while (agent.gender != 'M' && agent.gender != 'F') {
+                    printf("Invalid gender. Try again\n");
+                    scanf(" %c", &agent.gender);
+                }
                 
                 printf("How many assets will you be adding?\n");
                 scanf("%d", &noAsset);
                 if(noAsset > 0){
+                    
+                    int flag = 0;
                     for (int i = 0; i < noAsset; i++)
                     {
-                        struct Asset asset;
-                        int flag = 0;//bandera id correcto de asset
                         
+                        //bandera id correcto de asset
+                        struct Asset asset;
+                        flag = 0;
                         printf("Name: ");
                         scanf("%s", asset.name);
                         while(checkName(asset.name) == 0){
@@ -201,9 +218,8 @@ int main() {
                         }
                         
                         //registro
-                        assets[iAsset] = &asset;
-                        printf("%p", assets[iAsset]);
-                        agent.asset[i] = &asset;
+                        assets[iAsset] = asset;
+                        agent.asset[i] = asset;
                         iAsset++;
                         printf("Asset registered. \n");
                     }
@@ -214,10 +230,10 @@ int main() {
                 while (checkMissionID(agent.mission) == 0) {
                     scanf("%s", agent.mission);
                 }
-                //checkMission();
+                
                 registerMission(mission, iMission);
                 iMission++;
-                agents[iAgent] = agent;
+                agents[iAgent] = agent; //registro del agent en array de agentes
                 iAgent++;
             }
                 break;
@@ -254,7 +270,7 @@ int main() {
                 }
                 
                 //registro
-                assets[iAsset] = &asset;
+                assets[iAsset] = asset;
                 iAsset++;
                 printf("Asset registered. \n");
             }
