@@ -121,7 +121,7 @@ int checkAssetID(char id[13]){//validar ID del asset
 
 
 // mission 1 
-
+//Access to files, ecryption and reads
 void agentPrintToFile(FILE *fp, int num, int currAgents){
     if(num <= currAgents && num > 0){
         num--;
@@ -144,6 +144,7 @@ void agentPrintToFile(FILE *fp, int num, int currAgents){
             fprintf(fp, "Agent has no assets.\n");
         }
         fprintf(fp, "Agent Current mission: %s\n", agents[num].mission);
+        fprintf(fp, "----------------------------\n");
     }
 
 }
@@ -188,6 +189,10 @@ void readFile(){
         }
     }
     fclose(fptr);
+}
+
+int encryption(FILE *fp){
+    return 0;
 }
 
 int checkMissionID(char id[13]){ //validar id de la mision
