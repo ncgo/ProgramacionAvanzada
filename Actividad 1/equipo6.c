@@ -226,8 +226,9 @@ int main() {
                         iAsset++;
                         printf("Asset registered. \n");
                     }
-                    agent.numAssets = noAsset;
+                    
                 }
+                agent.numAssets = noAsset;
                 printf("Enter agents current mission: \n");
                 scanf("%s", agent.mission);
                 while (checkMissionID(agent.mission) == 0) {
